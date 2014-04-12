@@ -1,0 +1,13 @@
+(
+		(
+				7,
+				10000,
+				"Camera Drones",
+				"EQ_CAMERA_DRONES",
+				"Primable equipment to control drone cameras with extensible behaviours.",
+				{
+						"available_to_all" = true;
+						"script" = "camera_drone_equip.js";
+				}
+		)
+)

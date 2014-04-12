@@ -1,0 +1,12 @@
+{
+	identifier = "oolite.oxp.cim.camera-drones";
+	version = "1.3";
+	title = "Camera Drones";
+	required_oolite_version = "1.77";
+	description = "Drone cameras which provide a variety of alternative external views for your ship";
+	category = "Equipment";
+	author = "cim";
+	license = "CC-BY-SA 3.0";
+	download_url = "http://compsoc.dur.ac.uk/~cim/oolite/Camera_Drones_1.3.oxz";
+	information_url = "http://wiki.alioth.net/index.php/Camera_Drones";
+}
