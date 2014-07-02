@@ -23,6 +23,11 @@ this.startUp = function() {
 													update:this._flybyCamUpdate3.bind(this),
 													cameraPosition:this._flybyCamPosition.bind(this),
 													cameraVector:this._flybyCamDirection.bind(this)});
+		this._registerCamera({name:"Flyby Camera (long)",
+													initialisation:this._flybyCamInit2.bind(this),
+													update:this._flybyCamUpdate4.bind(this),
+													cameraPosition:this._flybyCamPosition.bind(this),
+													cameraVector:this._flybyCamDirection.bind(this)});
 		this._registerCamera({name:"Docking Camera",
 													initialisation:this._dockingCamInit.bind(this),
 													cameraPosition:this._dockingCamPosition.bind(this),
@@ -30,6 +35,12 @@ this.startUp = function() {
 		this._registerCamera({name:"Target Camera",
 													cameraPosition:this._targetCamPosition.bind(this),
 													cameraVector:this._targetCamDirection.bind(this)});
+		this._registerCamera({name:"Target Follow Camera",
+													cameraPosition:this._targetFollowCamPosition.bind(this),
+													cameraVector:this._targetFollowCamDirection.bind(this)});
+		this._registerCamera({name:"Target Lead Camera",
+													cameraPosition:this._targetLeadCamPosition.bind(this),
+													cameraVector:this._targetLeadCamDirection.bind(this)});
 
 
 }
@@ -151,6 +162,14 @@ this._flybyCamInit = function() {
 		this.$startVector = new Vector3D(player.ship.collisionRadius*2*Math.sin(angle),player.ship.collisionRadius*2*Math.cos(angle),player.ship.collisionRadius*20);
 }
 
+this._flybyCamInit2 = function() {
+		var angle = Math.random()*2*Math.PI;
+	this.$startVector = new Vector3D(player.ship.collisionRadius*6*Math.sin(angle),
+									 Math.abs(player.ship.collisionRadius*6*Math.cos(angle)),
+									 player.ship.collisionRadius*40);
+}
+
+
 this._flybyCamUpdate = function(delta) {
 		this.$startVector.z -= delta * 500;
 		if (this.$startVector.z < -player.ship.collisionRadius*20) {
@@ -171,6 +190,14 @@ this._flybyCamUpdate3 = function(delta) {
 				this._flybyCamInit();
 		}
 }
+
+this._flybyCamUpdate4 = function(delta) {
+		this.$startVector.z -= delta * 300;
+		if (this.$startVector.z < -player.ship.collisionRadius*20) {
+				this._flybyCamInit2();
+		}
+}
+
 
 this._flybyCamPosition = function() {
 		return player.ship.position.add(player.ship.vectorForward.multiply(this.$startVector.z)).add(player.ship.vectorUp.multiply(this.$startVector.y)).add(player.ship.vectorRight.multiply(this.$startVector.x));
@@ -214,4 +241,35 @@ this._targetCamPosition = function() {
 
 this._targetCamDirection = function() {
 		return player.ship.target.vectorForward;
+}
+
+
+this._targetFollowCamPosition = function() {
+		if (player.ship.target && player.ship.target.isShip) {
+			var pst = player.ship.target;
+			var r = pst.collisionRadius*3;
+			return pst.position.add(pst.vectorForward.multiply(-r)).add(pst.vectorUp.multiply(r/3)).add(pst.vectorRight.multiply(r/5));
+		}
+		return null;
+}
+
+this._targetFollowCamDirection = function() {
+	var pst = player.ship.target;
+	var dir = pst.vectorForward.add(pst.vectorUp.multiply(-1/3)).add(pst.vectorRight.multiply(-1/5));
+	return dir.direction();
+}
+
+this._targetLeadCamPosition = function() {
+		if (player.ship.target && player.ship.target.isShip) {
+			var pst = player.ship.target;
+			var r = pst.collisionRadius*3;
+			return pst.position.add(pst.vectorForward.multiply(r)).add(pst.vectorUp.multiply(r/3)).add(pst.vectorRight.multiply(r/5));
+		}
+		return null;
+}
+
+this._targetLeadCamDirection = function() {
+	var pst = player.ship.target;
+	var dir = pst.vectorForward.multiply(-1).add(pst.vectorUp.multiply(-1/3)).add(pst.vectorRight.multiply(-1/5));
+	return dir.direction();
 }

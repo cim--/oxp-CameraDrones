@@ -1,5 +1,5 @@
 #!/bin/bash -ex
 
 OXPNAME=CameraDrones
-VERSION=1.333
+VERSION=1.4
 . ../buildscript.common

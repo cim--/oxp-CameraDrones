@@ -10,14 +10,14 @@ available from other good retailers.
 Setting 1: missile camera. Launch a missile, then activate the camera
 and switch to external view to follow it.
 
-Setting 2: fly-by camera.
+Setting 2: fly-by cameras (various speeds and distances available).
 
 Setting 3: docking camera. Set up and activate the camera, turn on
 your docking computers, and switch to external view to see what
 traffic control sees.
 
 Setting 4: target camera. See a simulation of your current target's
-forward view.
+forward view or close-ups from various angles.
 
 ----------
 
